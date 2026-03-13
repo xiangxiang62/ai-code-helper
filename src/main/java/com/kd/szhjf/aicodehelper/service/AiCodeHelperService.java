@@ -1,11 +1,15 @@
 package com.kd.szhjf.aicodehelper.service;
 
+import com.kd.szhjf.aicodehelper.guardrail.SafeInputGuardrail;
 import dev.langchain4j.service.Result;
 import dev.langchain4j.service.SystemMessage;
+import dev.langchain4j.service.guardrail.InputGuardrails;
 import dev.langchain4j.service.spring.AiService;
 
 import java.util.List;
 
+
+@InputGuardrails({SafeInputGuardrail.class})
 //@AiService
 public interface AiCodeHelperService {
 

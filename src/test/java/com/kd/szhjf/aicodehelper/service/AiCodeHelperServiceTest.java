@@ -53,5 +53,15 @@ class AiCodeHelperServiceTest {
     }
 
 
+    /**
+     * 护轨测试
+     */
+    @Test
+    void chatWithGuardrail() {
+        String result = aiCodeHelperService.chat("kill the game");
+        System.out.println(result);
+    }
+
+
 
 }
