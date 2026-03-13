@@ -1,6 +1,7 @@
 package com.kd.szhjf.aicodehelper.factory;
 
 import com.kd.szhjf.aicodehelper.service.AiCodeHelperService;
+import com.kd.szhjf.aicodehelper.tools.InterviewQuestionTool;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
@@ -37,6 +38,20 @@ public class AiCodeHelperServiceFactory {
 
 
 
+//    @Bean
+//    public AiCodeHelperService aiCodeHelperService() {
+//        // 会话记忆
+//        ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
+//        // 构造 AI Service
+//        AiCodeHelperService aiCodeHelperService = AiServices.builder(AiCodeHelperService.class)
+//                .chatModel(qwenChatModel)
+//                .chatMemory(chatMemory)
+//                .contentRetriever(contentRetriever) // RAG 检索增强生成
+//                .build();
+//        return aiCodeHelperService;
+//    }
+
+
     @Bean
     public AiCodeHelperService aiCodeHelperService() {
         // 会话记忆
@@ -46,9 +61,12 @@ public class AiCodeHelperServiceFactory {
                 .chatModel(qwenChatModel)
                 .chatMemory(chatMemory)
                 .contentRetriever(contentRetriever) // RAG 检索增强生成
+                .tools(new InterviewQuestionTool()) // 工具调用
                 .build();
         return aiCodeHelperService;
+
     }
+
 
 
 
