@@ -1,8 +1,6 @@
 spring:
   application:
     name: ai-code-helper
-  profiles:
-    active: local
 server:
   port: 8123
 langchain4j:
