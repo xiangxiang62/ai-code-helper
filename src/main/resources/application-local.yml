@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: ai-code-helper
+  profiles:
+    active: local
+server:
+  port: 8123
+langchain4j:
+  community:
+    dashscope:
+      chat-model:
+        model-name: qwen-max
+        api-key: sk-64d570a77cc246c4b91670b36a7f8daa
+      embedding-model:
+        model-name: text-embedding-v4
+        api-key: sk-64d570a77cc246c4b91670b36a7f8daa
+
