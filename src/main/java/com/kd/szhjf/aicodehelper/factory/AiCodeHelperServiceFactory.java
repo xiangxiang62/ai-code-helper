@@ -5,6 +5,7 @@ import com.kd.szhjf.aicodehelper.tools.InterviewQuestionTool;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.service.AiServices;
 import jakarta.annotation.Resource;
@@ -19,6 +20,9 @@ public class AiCodeHelperServiceFactory {
 
     @Resource
     private ContentRetriever contentRetriever;
+
+    @Resource
+    private StreamingChatModel qwenStreamingChatModel;
 
 //    @Bean
 //    public AiCodeHelperService aiCodeHelperService() {
@@ -37,7 +41,6 @@ public class AiCodeHelperServiceFactory {
 //    }
 
 
-
 //    @Bean
 //    public AiCodeHelperService aiCodeHelperService() {
 //        // 会话记忆
@@ -52,22 +55,38 @@ public class AiCodeHelperServiceFactory {
 //    }
 
 
+//    @Bean
+//    public AiCodeHelperService aiCodeHelperService() {
+//        // 会话记忆
+//        ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
+//        // 构造 AI Service
+//        AiCodeHelperService aiCodeHelperService = AiServices.builder(AiCodeHelperService.class)
+//                .chatModel(qwenChatModel)
+//                .chatMemory(chatMemory)
+//                .contentRetriever(contentRetriever) // RAG 检索增强生成
+//                .tools(new InterviewQuestionTool()) // 工具调用
+//                .build();
+//        return aiCodeHelperService;
+//
+//    }
+
+
     @Bean
     public AiCodeHelperService aiCodeHelperService() {
         // 会话记忆
         ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
-        // 构造 AI Service
+
         AiCodeHelperService aiCodeHelperService = AiServices.builder(AiCodeHelperService.class)
                 .chatModel(qwenChatModel)
+                .streamingChatModel(qwenStreamingChatModel)
                 .chatMemory(chatMemory)
+                .chatMemoryProvider(memoryId ->
+                        MessageWindowChatMemory.withMaxMessages(10)) // 每个会话独立存储
                 .contentRetriever(contentRetriever) // RAG 检索增强生成
                 .tools(new InterviewQuestionTool()) // 工具调用
                 .build();
         return aiCodeHelperService;
 
     }
-
-
-
 
 }
